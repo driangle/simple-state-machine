@@ -1,58 +1,57 @@
 package ggr.sm
 
-// import java.util.concurrent.atomic.AtomicBoolean
+/**
+ * Represents a simple StateMachine with a minimal API
+ *
+ * @tparam State the type of the StateMachine's state
+ * @tparam Input the type of the StateMachine's Input
+ */
+trait StateMachine[State, Input] {
 
-case class StateMachine[State, Input](initialState : State, transition : (State, Input) => State) {
+  /**
+   * Obtains the current state of the StateMachine.
+   * If this is is called before consuming any input then it represents the initial state.
+   *
+   * @return the current state of the StateMachine
+   */
+  def currentState: State
 
-  private var currentState : State = initialState
+  /**
+   * Consumes the input and attempts to advance the StateMachine to the next state if any transitions match the input.
+   * If no transitions match the input, the state machine should remain in its currentState.
+   *
+   * @param input the input to consume
+   * @return the next state after consuming the input
+   */
+  def consume(input: Input): State
 
-  def getCurrentState : State = currentState
+  /**
+   * Allows clients to foresee the next State the StateMachine would be in if the input provided was consume.
+   * This operation does not modify the StateMachine's internal state.
+   *
+   * @param input the input to preview
+   * @return the state the StateMachine would be in if the input was consumed
+   */
+  def peek(input: Input): State
 
-  def consume(input : Input) : State = {
-    this.currentState = transition.apply(this.currentState, input)
-    this.currentState
-  }
+  /**
+   * Resets the StateMachine back to its initial state
+   *
+   * @return the StateMachine's initial state
+   */
+  def reset(): State
 
-  def reset() : State  = {
-    this.currentState = initialState
-    this.currentState
-  }
-
-  def set(newState : State) = {
-    this.currentState = newState
-  }
+  /**
+   * Forcefully sets the state of the StateMachine.
+   *
+   * @param newState the state to set
+   */
+  def set(newState: State): Unit
 
 }
 
 object StateMachine {
-
-  case class Builder[State, Input]() {
-
-    case class Transition(next : PartialFunction[(State, Input), State])
-
-    private var initialState : Option[State] = None
-    private var transitions : Seq[Transition] = List.empty
-
-    def withInitialState(state : State) : StateMachine.Builder[State, Input] = {
-      initialState = Some(state)
-      this
-    }
-    def transition(next : PartialFunction[(State, Input), State]) : StateMachine.Builder[State, Input] = {
-      transitions = transitions :+ Transition(next)
-      this
-    }
-
-    def build() : StateMachine[State, Input] = {
-      if (initialState.isEmpty) {
-        throw new IllegalStateException("You must set the initial state of the state machine using 'withInitialState'")
-      }
-      StateMachine(initialState.get, (state, input) => {
-        transitions.filter(_.next.isDefinedAt(state, input)).headOption
-          .map(_.next.apply(state, input)) match {
-          case Some(next) => next
-          case None => state // no transition matched input, stay in current state
-        }
-      })
-    }
+  def WithFunctionTransitions[State, Input]() : FunctionBasedStateMachine.Builder[State, Input] = {
+    new FunctionBasedStateMachine.Builder[State, Input]()
   }
 }
