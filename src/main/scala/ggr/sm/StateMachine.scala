@@ -26,7 +26,7 @@ trait StateMachine[State, Input] {
   def consume(input: Input): State
 
   /**
-   * Allows clients to foresee the next State the StateMachine would be in if the input provided was consume.
+   * Allows clients to foresee the next State the StateMachine would be in if the input provided was consumed.
    * This operation does not modify the StateMachine's internal state.
    *
    * @param input the input to preview

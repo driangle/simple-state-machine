@@ -53,8 +53,8 @@ import ggr.sm.StateMachine
 case class UIState(clicks : Seq[Point])
 
 sealed trait UserEvent
-case class MousePressed(mouse : Point)
-case class KeyPressed(key : Char)
+case class MousePressed(mouse : Point) extends UserEvent
+case class KeyPressed(key : Char) extends UserEvent
 
 val sm = StateMachine.WithFunctionTransitions[UIState, UserEvent]()
       .initialState(UIState())
