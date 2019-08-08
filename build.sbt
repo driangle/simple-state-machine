@@ -1,7 +1,7 @@
 lazy val ggr_sm = (project in file(".")).
   settings(
     inThisBuild(List(
-      organization := "ggr",
+      organization := "org.driangle",
       scalaVersion := "2.13.0",
       version := "0.1.0-SNAPSHOT"
     )),

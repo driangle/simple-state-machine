@@ -13,7 +13,6 @@ Currently only one implementation of the StateMachine interface exists:
 #### Define a StateMachine
 
 ```scala
-import ggr.sm.StateMachine
 
 val sm = StateMachine.WithFunctionTransitions[String, String]()
       .initialState("Inactive")

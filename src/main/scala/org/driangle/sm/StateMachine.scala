@@ -1,4 +1,4 @@
-package ggr.sm
+package org.driangle.sm
 
 /**
  * Represents a simple StateMachine with a minimal API

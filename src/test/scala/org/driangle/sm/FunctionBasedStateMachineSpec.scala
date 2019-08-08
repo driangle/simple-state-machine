@@ -1,4 +1,4 @@
-package ggr.sm
+package org.driangle.sm
 
 import org.scalatest.FunSuite
 
