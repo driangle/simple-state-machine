@@ -13,6 +13,7 @@ Currently only one implementation of the StateMachine interface exists:
 #### Define a StateMachine
 
 ```scala
+import org.driangle.sm.StateMachine
 
 val sm = StateMachine.WithFunctionTransitions[String, String]()
       .initialState("Inactive")
@@ -48,7 +49,8 @@ sm.set("CustomState")
 
 ### More advanced example
 ```scala
-import ggr.sm.StateMachine
+import org.driangle.sm.StateMachine
+
 case class UIState(clicks : Seq[Point])
 
 sealed trait UserEvent
@@ -65,7 +67,6 @@ val sm = StateMachine.WithFunctionTransitions[UIState, UserEvent]()
       })
       .build()
 ```
-
 
 ## License
 ```
