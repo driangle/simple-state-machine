@@ -6,7 +6,7 @@ lazy val ggr_sm = (project in file(".")).
       organizationName := "driangle",
       organizationHomepage := Some(url("https://driangle.org")),
       scalaVersion := "2.13.0",
-      version := "0.1.0-SNAPSHOT"
+      version := "0.1.0"
     )),
     name := "ggr-sm",
     description := "A simple, lightweight library for implementing state machines in Scala",
