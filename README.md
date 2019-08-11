@@ -1,4 +1,4 @@
-# ggr-sm : A simple lightweight state machine in Scala
+# simple-state-machine : A simple lightweight state machine in Scala
 
 This package contains a simple and lightweight library for implementing state machines in Scala.
 The library allows the client to user their own state, input types and transition functions.
