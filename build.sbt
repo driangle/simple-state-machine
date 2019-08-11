@@ -1,4 +1,4 @@
-lazy val simple_sm = (project in file(".")).
+lazy val simple_state_machine = (project in file(".")).
   settings(
     // Project information
     inThisBuild(List(
