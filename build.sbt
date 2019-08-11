@@ -1,4 +1,4 @@
-lazy val ggr_sm = (project in file(".")).
+lazy val simple_sm = (project in file(".")).
   settings(
     // Project information
     inThisBuild(List(
@@ -6,11 +6,11 @@ lazy val ggr_sm = (project in file(".")).
       organizationName := "driangle",
       organizationHomepage := Some(url("https://driangle.org")),
       scalaVersion := "2.13.0",
-      version := "0.1.0"
+      version := "0.1.0-SNAPSHOT"
     )),
-    name := "ggr-sm",
+    name := "simple-state-machine",
     description := "A simple, lightweight library for implementing state machines in Scala",
-    homepage := Some(url("https://driangle.github.io/ggr-sm/")),
+    homepage := Some(url("https://driangle.github.io/simple-state-machine/")),
     licenses := Seq("Apache v2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
 
     // Dependencies
@@ -31,8 +31,8 @@ lazy val ggr_sm = (project in file(".")).
     publishTo := sonatypePublishTo.value,
     scmInfo := Some(
       ScmInfo(
-        url("https://github.com/driangle/ggr-sm"),
-        "scm:git@github.com:driangle/ggr-sm.git"
+        url("https://github.com/driangle/simple-state-machine"),
+        "scm:git@github.com:driangle/simple-state-machine.git"
       )
     ),
     developers := List(
