@@ -1,5 +1,5 @@
 # simple-state-machine : A simple/lightweight state machine in Scala
-`version: 0.1.0-SNAPSHOT`
+`version: 0.1.0`
 
 This package contains a simple/lightweight library for implementing state machines in Scala.
 The library allows the client to use their own state, input types and transition functions.
@@ -14,6 +14,13 @@ Currently only one implementation of the StateMachine interface exists. I am ope
 
 ## Usage
 
+
+#### Add a dependency on this package
+```scala
+  resolvers += Resolver.sonatypeRepo("public")
+  ...  
+  libraryDependencies += "org.driangle" %% "simple-state-machine" % "0.1.0"
+```
 
 #### Define a StateMachine
 
