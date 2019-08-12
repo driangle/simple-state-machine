@@ -1,9 +1,13 @@
-# simple-state-machine : A simple lightweight state machine in Scala
+# simple-state-machine : A simple/lightweight state machine in Scala
 
-This package contains a simple and lightweight library for implementing state machines in Scala.
+This package contains a simple/lightweight library for implementing state machines in Scala.
 The library allows the client to use their own state, input types and transition functions.
 
-Currently only one implementation of the StateMachine interface exists:
+My main goals are:
+ - to provide a library that is easy to use, it has a simple API.
+ - to provide a library with zero dependencies.
+
+Currently only one implementation of the StateMachine interface exists. I am open to suggestions for other types of state machines:
 - `StateMachine.WithFunctionTransitions[State, Input]`: allows clients to specify transitions of type `PartialFunction[(State, Input), State]`. 
    If the transition is not defined for a (State, Input) then the StateMachine will remain in its current state.
 
