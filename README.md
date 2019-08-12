@@ -1,4 +1,5 @@
 # simple-state-machine : A simple/lightweight state machine in Scala
+`version: 0.1.0-SNAPSHOT`
 
 This package contains a simple/lightweight library for implementing state machines in Scala.
 The library allows the client to use their own state, input types and transition functions.
