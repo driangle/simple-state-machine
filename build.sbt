@@ -16,6 +16,7 @@ lazy val simple_state_machine = crossProject(JVMPlatform, JSPlatform).
     description := "A simple, lightweight library for implementing state machines in Scala",
     homepage := Some(url("https://driangle.github.io/simple-state-machine/")),
     licenses := Seq("Apache v2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+    // failure occurs when I try to use 2.13.0 due to [org.scala-sbt:compiler-bridge_2.13:1.2.1:compile could not be retrieved]
     crossScalaVersions := List("2.12.6"),
 
     // Publishing
