@@ -7,4 +7,5 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0")
 
 // Enables Cross Compiling
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject"      % "0.6.1")
-addSbtPlugin("org.scala-js"       % "sbt-scalajs"                   % "1.0.0-M8")
+addSbtPlugin("org.scala-js"       % "sbt-scalajs"                   % "0.6.28")
+//addSbtPlugin("org.scala-js"       % "sbt-scalajs"                   % "1.0.0-M8")
