@@ -34,15 +34,12 @@ lazy val simple_state_machine = crossProject(JVMPlatform, JSPlatform).
         email = "german.greiner@gmail.com",
         url = url("https://germangreiner.com")
       )
-    )
-
-  ).
-  jvmSettings(
-    // Dependencies
+    ),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.8" % "test"
-    ),
-
+    )
+  ).
+  jvmSettings(
     // Reports
     jacocoReportSettings := JacocoReportSettings()
       .withThresholds(

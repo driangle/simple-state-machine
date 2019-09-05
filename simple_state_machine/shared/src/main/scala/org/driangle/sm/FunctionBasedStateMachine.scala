@@ -11,33 +11,26 @@ import java.util.concurrent.atomic.AtomicReference
  * @param initialState the first state of the StateMachine
  * @param transition   a function that will be used to transition the StateMachine to its next state.
  *                     The arguments will be (currentState, input) and the output should be the next state the StateMachine should transition to.
- * @param onChangeCallback a callback that will be invoked whenever the state changes
  * @tparam State the type of the StateMachine's state
  * @tparam Input the type of the StateMachine's Input
  */
 class FunctionBasedStateMachine[State, Input](private val initialState: State,
-                                              private val transition: (State, Input) => State,
-                                              private val onChangeCallback : Function2[State, State, Unit] = (_: State, _ : Input) => {})
+                                              private val transition: (State, Input) => State)
   extends StateMachine[State, Input] {
 
   require(transition != null, "[transition] function cannot be null")
-  require(onChangeCallback != null, "[onChangeCallback] cannot be null")
 
   private val _currentState: AtomicReference[State] = new AtomicReference(initialState)
 
   override def currentState: State = _currentState.get()
 
   override def consume(input: Input): State = {
-    val startState = currentState
     var result = false
-    var newState : State = startState
+    var newState : State = currentState
     while (!result) {
       val currentStateRightNow = this._currentState.get()
       newState = transition.apply(currentStateRightNow, input)
       result = this._currentState.compareAndSet(currentStateRightNow, newState)
-    }
-    if (startState != newState) {
-      onChangeCallback.apply(startState, newState)
     }
     newState
   }
@@ -45,20 +38,12 @@ class FunctionBasedStateMachine[State, Input](private val initialState: State,
   override def peek(input: Input): State = transition.apply(this._currentState.get(), input)
 
   override def reset(): State = {
-    val startState = currentState
     this._currentState.set(initialState)
-    if (startState != initialState) {
-      onChangeCallback.apply(startState, initialState)
-    }
     initialState
   }
 
   override def set(newState: State): Unit = {
-    val startState = currentState
     this._currentState.set(newState)
-    if (startState != initialState) {
-      onChangeCallback.apply(startState, newState)
-    }
   }
 
 }
@@ -74,11 +59,9 @@ object FunctionBasedStateMachine {
   class Builder[State, Input]() {
 
     private type Transition = PartialFunction[(State, Input), State]
-    private type OnChangeCallback = Function2[State, State, Unit]
 
     private var initialState: Option[State] = None
     private var transitions: Seq[Transition] = List.empty
-    private var onChangeCallbacks : Seq[OnChangeCallback] = List.empty
 
     /**
      * Sets the initial state of the StateMachine
@@ -104,12 +87,6 @@ object FunctionBasedStateMachine {
       this
     }
 
-    def onChange(callback : OnChangeCallback) : FunctionBasedStateMachine.Builder[State, Input] = {
-      require(callback != null, "[callback] cannot be null")
-      onChangeCallbacks = onChangeCallbacks :+ callback
-      this
-    }
-
     /**
      * Builds a FunctionBasedStateMachine instance.
      * - You must set the initialSate.
@@ -131,10 +108,7 @@ object FunctionBasedStateMachine {
           case None => state // no transition matched input, stay in current state
         }
       }
-      val compositeOnChangeCallback = (lastState : State, newState : State) => {
-        onChangeCallbacks.foreach(_.apply(lastState, newState))
-      }
-      new FunctionBasedStateMachine(initialState.get, compositeTransition, compositeOnChangeCallback)
+      new FunctionBasedStateMachine(initialState.get, compositeTransition)
     }
   }
 
